@@ -49,9 +49,9 @@ def test_short_password(setup_teardown):
 def test_valid_input(setup_teardown):
     driver = setup_teardown
     driver.get("http://127.0.0.1:5000/")
-    driver.find_element(By.NAME, "username").send_keys("alice")
+    driver.find_element(By.NAME, "username").send_keys("Alice")
     driver.find_element(By.NAME, "pwd").send_keys("abc123")
     driver.find_element(By.NAME, "sb").click()
     assert "/submit" in driver.current_url
     body_text = driver.find_element(By.TAG_NAME, "body").text
-    assert "Hello, alice! Welcome to the website" in body_text
+    assert "Hello, Alice! Welcome to the website" in body_text
