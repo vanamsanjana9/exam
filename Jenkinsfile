@@ -3,14 +3,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Running tests') {
+        stage('Test') {
             steps {
                 echo "Running tests"
                 bat 'pip install -r requirements.txt'
                 bat 'start /B python app.py'
+                bat 'ping 127.0.0.1 -n 5 > nul'
                 bat 'pytest -v'
             }
         }
+
         stage('Build') {
             steps {
                 echo "Building Docker Image"
@@ -20,6 +22,7 @@ pipeline {
 
         stage('Docker Login') {
             steps {
+                echo "Docker Login"
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-creds',
                     usernameVariable: 'DOCKERHUB_USER',
@@ -40,7 +43,6 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying"
                 bat 'kubectl apply -f deployment.yaml --validate=false'
                 bat 'kubectl apply -f service.yaml'
             }
@@ -49,7 +51,7 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed'

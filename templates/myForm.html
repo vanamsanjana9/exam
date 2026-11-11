@@ -2,56 +2,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form Example</title>
+    <title>Registration form</title>
+</head>
 
+<body>
+        <form action="/submit" method="POST"
+              onsubmit="return validateForm()">
+            Username:
+            <input type="text" name="username" id="username">
+            <br><br>
+            Password:
+            <input type="password" name="pwd" id="pwd">
+            <br><br>
+            <input type="submit" name="sb" value="Submit" id="sb">
+        </form>
     <script>
         function validateForm() {
-            var username = document.forms["f1"]["username"].value.trim();
-            var password = document.forms["f1"]["pwd"].value;
-
-            // Validate username
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("pwd").value;
             if (username === "") {
                 alert("Username cannot be empty.");
                 return false;
             }
-
-            // Validate password
             if (password === "") {
                 alert("Password cannot be empty.");
                 return false;
             }
-
-            // Password must contain at least 6 characters
             if (password.length < 6) {
-                alert("Password must be at least 6 characters long.");
+                alert("Password length is less than 6");
                 return false;
             }
-
-            // If all validations pass
             return true;
         }
     </script>
-</head>
-
-<body>
-    <center>
-        <h2>Application Form</h2>
-
-        <form name="f1" action="/submit" method="POST"
-              onsubmit="return validateForm()">
-
-            Enter Your Name:
-            <input type="text" name="username">
-
-            <br><br>
-
-            Enter Your Password:
-            <input type="password" name="pwd">
-
-            <br><br>
-
-            <input type="submit" name="sb" value="Submit">
-        </form>
-    </center>
 </body>
 </html>
